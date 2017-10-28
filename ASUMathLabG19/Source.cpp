@@ -12,7 +12,7 @@ void main() {
 //	double c=CMatrix::getDeterminant();
 	cout << k.getDeterminant(); 
 	*/
-
+	 
 
 	system("pause");
 }
