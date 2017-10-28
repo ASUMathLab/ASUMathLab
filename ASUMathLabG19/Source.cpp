@@ -109,36 +109,11 @@ void main() {
 
 				CMatrix temp = Matrix[input[2]];
 				key = input[0];
-				//Calculate 2 or more matrices
+				//Calculate 2 or more matrices, Example of Input : C = A + A + B , C = A * B * B
 				Calculate(input, temp);
 				Matrix[key] = temp;
 				cout << Matrix[key];
 
-
-
-
-				//without recursion function only 2 matrices..
-				/*if (input.find("+") != string::npos)
-				{
-				CMatrix temp = Matrix[input[2]] + Matrix[input[4]];
-				key = input[0];
-				Matrix[key] = temp;
-				cout << Matrix[key];
-				}
-				else if ((input.find("-") != string::npos))
-				{
-				CMatrix temp = Matrix[input[2]] - Matrix[input[4]];
-				key = input[0];
-				Matrix[key] = temp;
-				cout << Matrix[key];
-				}
-				else if ((input.find("*") != string::npos))
-				{
-				CMatrix temp = Matrix[input[2]] * Matrix[input[4]];
-				key = input[0];
-				Matrix[key] = temp;
-				cout << Matrix[key];
-				}*/
 			}
 			else
 				continue;
