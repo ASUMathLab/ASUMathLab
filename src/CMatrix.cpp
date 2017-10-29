@@ -144,7 +144,9 @@
 		for (int iR = 0; iR < nR; iR++) {
 			for (int iC = 0; iC < nC; iC++) {
 				char buffer[50];
-				sprintf_s(buffer, 50, " %g\t", values[iR][iC]);
+				double n = values[iR][iC];
+				//sprintf(buffer, 50, " %g\t", values[iR][iC]);
+				sprintf(buffer, " %g\t", n);
 				s += buffer;
 			}
 			s += "\r\n";
