@@ -2,7 +2,6 @@
 #include "stdarg.h"
 #include <algorithm>
 #include <iostream>
-#include<string>
 
 	CMatrix::CMatrix() {
 		nR = nC = 0;
@@ -108,7 +107,7 @@
 	void CMatrix ::copy(string s) {
 		reset();
 		char * buffer = new char[s.length() + 1];
-//		strcpy(buffer, s.c_str());
+		strcpy(buffer, s.c_str());
 		char * lineContext;
 		char * lineSeparators = ";\r\n";
 		char * line = strtok_s(buffer, lineSeparators, &lineContext);
@@ -277,9 +276,9 @@
 			for (int iC = 0; iC < m.nC; iC++)
 				values[r + iR][c + iC] = m.values[iR][iC];
 	}
-	CMatrix CMatrix ::getSubMatrix(int r, int c, int nR, int nC) {
-		if((r + nR) > nR || (c + nC) > nC) throw ("Invalid matrix dimension");
-		CMatrix m(nR, nC);
+	CMatrix CMatrix ::getSubMatrix(int r, int c, int nr, int nc) {
+		if((r + nr) > nR || (c + nc) > nC) throw ("Invalid matrix dimension");
+		CMatrix m(nr, nc);
 		for (int iR = 0; iR < m.nR; iR++)
 			for (int iC = 0; iC < m.nC; iC++)
 				m.values[iR][iC] = values[r + iR][c + iC];
@@ -310,20 +309,46 @@
 			}
 		return m;
 	}
+
 	double CMatrix ::getDeterminant() {
 		if(nR!= nC) throw ("Invalid matrix dimension");
 		if(nR == 1 && nC == 1) return values[0][0];
 		double value = 0, m = 1;
 		for (int iR = 0; iR < nR; iR++) {
-		//	double u = getCofactor(0, iR).getDeterminant();
-		//	double y = values[0][iR];
-			value += m *values[0][iR] * getCofactor(0, iR).getDeterminant();
+			value += m * values[0][iR] * getCofactor(0, iR).getDeterminant();
 			m *= -1;
 		}
-		
 		return value;
 	}
+	///////////////////////////////////////////////////////////////////////////////
+	CMatrix CMatrix::getTranspose()
+	{
+		CMatrix a(nC, nR);
+		for (int iR = 0; iR < a.nR; iR++)
+			for (int iC = 0; iC < a.nC; iC++)
+				a.values[iR][iC] = values[iC][iR];
 
+		return a;
+	}
+
+	CMatrix CMatrix::getInverse()
+	{
+		if (nR != nC) throw ("Invalid matrix dimension");
+		CMatrix m(nR, nC);
+		for (int iR = 0; iR < m.nR; iR++)
+			for (int iC = 0; iC < m.nC; iC++) 
+			{
+				if (iR % 2 == 0) {
+					m.values[iR][iC] = (iC % 2 == 0) ? getCofactor(iR, iC).getDeterminant() : -getCofactor(iR, iC).getDeterminant();
+				}
+				else
+					m.values[iR][iC] = (iC % 2 == 0) ? -getCofactor(iR, iC).getDeterminant() : getCofactor(iR, iC).getDeterminant();
+			}
+		m = m.getTranspose();
+		m = m * (1 / getDeterminant());
+		return m;
+	}
+	/////////////////////////////////////////////////////////////////////////////
 	istream & operator >> (istream &is, CMatrix & m) {
 		string s;
 		getline(is, s, ']');

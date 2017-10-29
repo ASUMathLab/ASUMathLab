@@ -85,7 +85,9 @@ public:
 		return nC;
 	};
 	double getDeterminant();
-	//double getTranspose();
-	//double getInverse();
+	
+	CMatrix getTranspose();
+	
+	CMatrix getInverse();
 };
 
