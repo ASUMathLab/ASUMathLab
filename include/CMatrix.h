@@ -21,10 +21,10 @@ public:
 	};
 	CMatrix(int nR, int nC, int initialization = MI_ZEROS, double initializationValue = 0.0);
 	CMatrix(int nR, int nC, double first, ...);
-	CMatrix(CMatrix & m);
+	CMatrix(const CMatrix & m);
 	CMatrix(double d);
 	CMatrix(string s);
-	void copy(CMatrix & m);
+	void copy(const CMatrix & m);
 	void copy(double d);
 	void copy(string s);
 	void reset();

@@ -66,18 +66,18 @@
 	va_end(va);
 		}
 				   
-	CMatrix ::CMatrix(CMatrix & m) {
+	CMatrix ::CMatrix(const CMatrix & m) {
 		nR = nC = 0;
 		values = NULL;
 		copy(m);
-					   }
+		}
 	CMatrix::CMatrix(string s) {
-					   nR = nC = 0;
-					   values = NULL;
-					   copy(s);
-				   }
+		 nR = nC = 0;
+		 values = NULL;
+	    	 copy(s);
+		 }
 	
-	void CMatrix ::copy(CMatrix & m) {
+	void CMatrix ::copy(const CMatrix & m) {
 		reset();
 		this -> nR = m.nR;
 		this -> nC = m.nC;
