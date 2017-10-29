@@ -289,13 +289,13 @@
 		return m;
 	}
 
-	void CMatrix ::addColumn(CMatrix & m) {
+	void CMatrix ::addColumn(const CMatrix & m) {
 		CMatrix n(max(nR, m.nR), nC + m.nC);
 		n.setSubMatrix(0, 0, *this);
 		n.setSubMatrix(0, nC, m);
 		*this = n;
 	}
-	void CMatrix ::addRow(CMatrix & m) {
+	void CMatrix ::addRow(const CMatrix & m) {
 		CMatrix n(nR + m.nR, max(nC, m.nC));
 		n.setSubMatrix(0, 0, *this);
 		n.setSubMatrix(nR, 0, m); 
