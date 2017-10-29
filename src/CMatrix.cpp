@@ -167,7 +167,7 @@
 		return *this;
 	}
 
-	void CMatrix ::add(CMatrix & m) {
+	void CMatrix ::add(const CMatrix & m) {
 		if(nR!= m.nR || nC!= m.nC)
 			throw ("Invalid matrix dimension");
 		for (int iR = 0; iR < nR; iR++)
@@ -191,7 +191,7 @@
 		return r;
 	}
 
-	void CMatrix ::sub(CMatrix & m) {
+	void CMatrix ::sub(const CMatrix & m) {
 		if(nR!= m.nR || nC!= m.nC)
 			throw ("Invalid matrix dimension");
 		for (int iR = 0; iR < nR; iR++)
@@ -215,7 +215,7 @@
 		return r;
 	}
 
-	void CMatrix ::mul(CMatrix & m) {
+	void CMatrix ::mul(const CMatrix & m) {
 		if(nR!= m.nR || nC!= m.nC)
 			throw ("Invalid matrix dimension");
 		CMatrix r(nR, m.nC);
