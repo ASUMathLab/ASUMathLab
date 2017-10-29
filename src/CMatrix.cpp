@@ -2,7 +2,10 @@
 #include "stdarg.h"
 #include <algorithm>
 #include <iostream>
-#include<string>
+#include <cstring>
+#include <string.h>
+
+//using namespace std;
 
 	CMatrix::CMatrix() {
 		nR = nC = 0;
@@ -108,23 +111,21 @@
 	void CMatrix ::copy(string s) {
 		reset();
 		char * buffer = new char[s.length() + 1];
-//		strcpy(buffer, s.c_str());
-		char * lineContext;
-		char * lineSeparators = ";\r\n";
-		char * line = strtok_s(buffer, lineSeparators, &lineContext);
+		strcpy(buffer, s.c_str());
+		const char * lineSeparators = ";\r\n";
+		char * line = strtok(buffer, lineSeparators);
 		while (line) {
 			CMatrix row;
-			char * context;
-			char * separators = " []";
-			char * token = strtok_s(line, separators, &context);
+			const char * separators = " []";
+			char * token = strtok(line, separators);
 			while (token) {
 				CMatrix item = atof(token);
 				row.addColumn(item);
-				token = strtok_s(NULL, separators, &context);
+				token = strtok(NULL, separators);
 			}
 			if(row.nC > 0 && (row.nC == nC || nR == 0))
 				addRow(row);
-			line = strtok_s(NULL, lineSeparators, &lineContext);
+			line = strtok(NULL, lineSeparators);
 		}
 		delete[] buffer;
 	}
@@ -315,12 +316,9 @@
 		if(nR == 1 && nC == 1) return values[0][0];
 		double value = 0, m = 1;
 		for (int iR = 0; iR < nR; iR++) {
-		//	double u = getCofactor(0, iR).getDeterminant();
-		//	double y = values[0][iR];
-			value += m *values[0][iR] * getCofactor(0, iR).getDeterminant();
+			value += m * values[0][iR] * getCofactor(0, iR).getDeterminant();
 			m *= -1;
 		}
-		
 		return value;
 	}
 
