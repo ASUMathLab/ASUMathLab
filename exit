@@ -1,0 +1,110 @@
+[33mcommit a6a52e5ef25cc0a5288278b52a9e3d61b96370a8[m
+Author: AmrGalal7 <amrgalal7@yahoo.com>
+Date:   Sun Oct 29 22:51:11 2017 +0200
+
+    fix: void addRow(const CMatrix & m);
+
+ include/CMatrix.h | 4 [32m++[m[31m--[m
+ src/CMatrix.cpp   | 4 [32m++[m[31m--[m
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+[33mcommit d49099f9a7cc34ffe038aac2a8887bd318b6ca32[m
+Author: AmrGalal7 <amrgalal7@yahoo.com>
+Date:   Sun Oct 29 22:49:15 2017 +0200
+
+    fix: void add(CMatrix & m) changed to void add(const CMatrix & m); same for member functions: sum, mul
+
+ include/CMatrix.h | 6 [32m+++[m[31m---[m
+ src/CMatrix.cpp   | 6 [32m+++[m[31m---[m
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+[33mcommit 0f433a6dc22dca8beb8fa25c148e953cb7c0e971[m
+Author: AmrGalal7 <amrgalal7@yahoo.com>
+Date:   Sun Oct 29 22:43:07 2017 +0200
+
+    fix: sprintf_s() changed to sprintf()
+
+ src/CMatrix.cpp | 4 [32m+++[m[31m-[m
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+[33mcommit 4556af1c0a4ee749a278212901be7c2641d2add6[m
+Author: AmrGalal7 <amrgalal7@yahoo.com>
+Date:   Sun Oct 29 22:31:59 2017 +0200
+
+    fix: invalid initialisation in CMatrix(CMatrix& m), void copy(CMatrix& m). Changed to CMatrix(const CMatrix& m), void copy(const CMatrix& m) in CMatrix.cpp and CMatrix.h
+
+ include/CMatrix.h |  4 [32m++[m[31m--[m
+ src/CMatrix.cpp   | 14 [32m+++++++[m[31m-------[m
+ 2 files changed, 9 insertions(+), 9 deletions(-)
+
+[33mcommit 919e38fce4d9611b7053cdf7a8baaf1a5af14dbf[m
+Author: AmrGalal7 <amrgalal7@yahoo.com>
+Date:   Sun Oct 29 13:32:31 2017 +0200
+
+    fix: strcpy(); strtok_s()replaced by strtok()
+
+ src/CMatrix.cpp | 28 [32m+++++++++++++[m[31m---------------[m
+ 1 file changed, 13 insertions(+), 15 deletions(-)
+
+[33mcommit 96b4f349d46951d7a80ceb55a7d3dc825dc9345b[m
+Author: AmrGalal7 <amrgalal7@yahoo.com>
+Date:   Sun Oct 29 13:24:53 2017 +0200
+
+    main.cpp added to /src
+
+ src/main.cpp | 17 [32m+++++++++++++++++[m
+ 1 file changed, 17 insertions(+)
+
+[33mcommit c1a11a7aec8d3af61adacde85f4b4f8df6edcb61[m
+Author: AmrGalal7 <amrgalal7@yahoo.com>
+Date:   Sun Oct 29 13:21:46 2017 +0200
+
+    makefile added
+
+ makefile | 26 [32m++++++++++++++++++++++++++[m
+ 1 file changed, 26 insertions(+)
+
+[33mcommit 49eecb43b2ba81e15c85d0826d1b379164b88703[m
+Author: AmrGalal7 <amrgalal7@yahoo.com>
+Date:   Sun Oct 29 13:12:44 2017 +0200
+
+    project layout folders created
+
+ ASUMathLabG19/CMatrix.cpp | 337 [31m-------------------------------------------------------------[m
+ ASUMathLabG19/CMatrix.h   |  91 [31m-----------------[m
+ include/CMatrix.h         |  91 [32m+++++++++++++++++[m
+ src/CMatrix.cpp           | 337 [32m+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++[m
+ 4 files changed, 428 insertions(+), 428 deletions(-)
+
+[33mcommit 5fd9a50923ef45f2c310050f0a9ba1ac510fbd85[m
+Author: AhmedSadek60 <ahmed_sadek60@hotmail.com>
+Date:   Sat Oct 28 15:31:11 2017 +0200
+
+    Matrix functions are implemented
+
+ ASUMathLabG19/Source.cpp | 2 [32m+[m[31m-[m
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+[33mcommit fe18b0338c2ca7ffe2915fc10bb29760f2c47f7e[m
+Author: AhmedSadek60 <ahmed_sadek60@hotmail.com>
+Date:   Sat Oct 28 15:29:27 2017 +0200
+
+    Add project files.
+
+ ASUMathLabG19.sln                           |  31 [32m++++[m
+ ASUMathLabG19/ASUMathLabG19.vcxproj         | 123 [32m++++++++++++++++[m
+ ASUMathLabG19/ASUMathLabG19.vcxproj.filters |  30 [32m++++[m
+ ASUMathLabG19/CMatrix.cpp                   | 337 [32m+++++++++++++++++++++++++++++++++++++++++++[m
+ ASUMathLabG19/CMatrix.h                     |  91 [32m++++++++++++[m
+ ASUMathLabG19/Source.cpp                    |  18 [32m+++[m
+ 6 files changed, 630 insertions(+)
+
+[33mcommit 61c0add7e6fe1a80d436bc39e3426840548f9b4d[m
+Author: AhmedSadek60 <ahmed_sadek60@hotmail.com>
+Date:   Sat Oct 28 15:29:22 2017 +0200
+
+    Add .gitignore and .gitattributes.
+
+ .gitattributes |  63 [32m++++++++++++++++++[m
+ .gitignore     | 261 [32m++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++[m
+ 2 files changed, 324 insertions(+)

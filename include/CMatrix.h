@@ -1,7 +1,10 @@
+#ifndef HEADER
+#define HEADER
 #include <string>
 #include <fstream>
 #include "stdarg.h"
 #include <algorithm>
+#include <stdio.h>
 #include <iostream>
 
 using namespace std;
@@ -9,6 +12,7 @@ using namespace std;
 class CMatrix {
 	int nR, nC;
 	double * * values;
+	string name;
 public:
 	CMatrix();
 	~CMatrix();
@@ -19,8 +23,10 @@ public:
 		MI_RAND,
 		MI_VALUE
 	};
+	CMatrix(string name,int nR, int nC, int initialization = MI_ZEROS, double initializationValue = 0.0);
 	CMatrix(int nR, int nC, int initialization = MI_ZEROS, double initializationValue = 0.0);
 	CMatrix(int nR, int nC, double first, ...);
+	CMatrix(string name,int nR, int nC, double first, ...);
 	CMatrix(const CMatrix & m);
 	CMatrix(double d);
 	CMatrix(string s);
@@ -28,9 +34,11 @@ public:
 	void copy(double d);
 	void copy(string s);
 	void reset();
+	void getValues();
 	string getString();
+	string getName();
 
-	CMatrix operator = (CMatrix & m);
+	CMatrix operator = (const CMatrix & m);
 	CMatrix operator = (double d);
 	CMatrix operator = (string s);
 	void add(const CMatrix & m);
@@ -61,7 +69,7 @@ public:
 	CMatrix operator + ();
 	friend istream & operator >> (istream & is, CMatrix & C); //Stream
 	friend ostream & operator << (ostream & os, CMatrix & C); //Stream
-	void setSubMatrix(int iR, int iC, CMatrix & m);
+	void setSubMatrix(int iR, int iC, const CMatrix & m);
 	CMatrix getSubMatrix(int r, int c, int nr, int nc);
 	CMatrix getCofactor(int r, int c);
 	void addColumn(const CMatrix & m);
@@ -89,3 +97,4 @@ public:
 	//double getInverse();
 };
 
+#endif

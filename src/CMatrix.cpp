@@ -4,20 +4,60 @@
 #include <iostream>
 #include <cstring>
 #include <string.h>
+#include <stdio.h>
 
-//using namespace std;
+// using namespace std;
 
 	CMatrix::CMatrix() {
 		nR = nC = 0;
 		values = NULL;
+		this -> name = "none";
 	}
 	CMatrix::~CMatrix() {
 			 reset();
 		 }
-	
+
+		 CMatrix::CMatrix(string name,int nR, int nC, int initialization = MI_ZEROS, double initializationValue = 0.0) {
+								 this -> nR = nR;
+								 this -> nC = nC;
+								 this -> name = name;
+								 if((nR * nC) == 0) {
+									 values = NULL;
+									 return;
+								 }
+								 values = new double *[nR];
+								 for (int iR = 0; iR < nR; iR++) {
+									 values[iR] = new double[nC];
+									 for (int iC = 0; iC < nC; iC++) {
+										 switch (initialization) {
+										 case MI_ZEROS :
+					 values[iR][iC] = 0;
+					 break;
+										 case MI_ONES :
+					 values[iR][iC] = 1;
+					 break;
+										 case MI_EYE :
+					 values[iR][iC] = (iR == iC) ? 1 : 0;
+					 break;
+										 case MI_RAND :
+					 values[iR][iC] = (rand() % 1000000) / 1000000.0;
+					 break;
+										 case MI_VALUE :
+					 values[iR][iC] = initializationValue;
+					 break;
+										 }
+									 }
+								 }
+
+
+
+		 }
+
+
 	CMatrix::CMatrix(int nR, int nC, int initialization, double initializationValue) {
 				  this -> nR = nR;
 				  this -> nC = nC;
+					this -> name = "none";
 				  if((nR * nC) == 0) {
 					  values = NULL;
 					  return;
@@ -45,10 +85,11 @@
 						  }
 					  }
 				  }
-			  }			   
+			  }
 	CMatrix ::CMatrix(int nR, int nC, double first, ...) {
 		this -> nR = nR;
 	   this -> nC = nC;
+		 this -> name = "none";
 	   if((nR * nC) == 0) {
 		   values = NULL;
 		   return;
@@ -65,22 +106,45 @@
 	}
 	va_end(va);
 		}
-				   
+		CMatrix ::CMatrix(string name,int nR, int nC, double first, ...) {
+			this -> nR = nR;
+			 this -> nC = nC;
+			 this -> name = name;
+			 if((nR * nC) == 0) {
+				 values = NULL;
+				 return;
+			 }
+			 values = new double *[nR];
+				 va_list va;
+
+				 va_start(va, first);
+		 for (int iR = 0; iR < nR; iR++) {
+			 values[iR] = new double[nC];
+			 for (int iC = 0; iC < nC; iC++) {
+				 values[iR][iC] = (iC == 0 && iR == 0) ? first : va_arg(va, double);
+			 }
+		}
+		va_end(va);
+			}
+
 	CMatrix ::CMatrix(const CMatrix & m) {
 		nR = nC = 0;
 		values = NULL;
+		this -> name = "none";
 		copy(m);
 		}
 	CMatrix::CMatrix(string s) {
 		 nR = nC = 0;
 		 values = NULL;
+		 this -> name = "none";
 	    	 copy(s);
 		 }
-	
+
 	void CMatrix ::copy(const CMatrix & m) {
 		reset();
 		this -> nR = m.nR;
 		this -> nC = m.nC;
+		this -> name = m.name;
 		if((nR * nC) == 0) {
 			values = NULL;
 			return;
@@ -94,15 +158,22 @@
 		}
 	}
 
+	string CMatrix:: getName() {
+		string data = this -> name;
+			return data;
+		}
+
 	CMatrix::CMatrix(double d) {
 		nR = nC = 0;
 		values = NULL;
+		this -> name = "none";
 		copy(d);
 	}
 	void CMatrix::copy(double d) {
 		reset();
 		this -> nR = 1;
 		this -> nC = 1;
+		this -> name = "none";
 		values = new double *[1];
 		values[0] = new double[1];
 		values[0][0] = d;
@@ -116,17 +187,22 @@
 		char * line = strtok(buffer, lineSeparators);
 		while (line) {
 			CMatrix row;
-			const char * separators = " []";
-			char * token = strtok(line, separators);
-			while (token) {
-				CMatrix item = atof(token);
-				row.addColumn(item);
-				token = strtok(NULL, separators);
+			string s;
+			for(int i = 1 ; i < strlen(line);i++) {
+				if(line[i] == ' ' || line[i] == ']') {
+					CMatrix item = atof(s.c_str());
+					row.addColumn(item);
+					s = "";
+				} else {
+					s += line[i];
+				}
 			}
+
 			if(row.nC > 0 && (row.nC == nC || nR == 0))
 				addRow(row);
 			line = strtok(NULL, lineSeparators);
 		}
+		// this -> name = "none"; // Parsing First Charactars for Initialization for the Contructor
 		delete[] buffer;
 	}
 
@@ -154,7 +230,22 @@
 		return s;
 	}
 
-	CMatrix CMatrix ::operator = (CMatrix & m) {
+	void CMatrix::getValues() {
+
+		int lengthValues = sizeof(this->values) / sizeof(double);
+		for(int i = 0 ; i < nR;i++) {
+			for(int j = 0;j< nC ;j++) {
+
+				printf("%f\t",values[i][j]);
+
+			}
+			printf("\n");
+		}
+
+
+	}
+
+	CMatrix CMatrix ::operator = (const CMatrix & m) {
 		copy(m);
 		return *this;
 	}
@@ -274,7 +365,7 @@
 		return *this;
 	}
 
-	void CMatrix ::setSubMatrix(int r, int c, CMatrix & m) {
+	void CMatrix ::setSubMatrix(int r, int c,const CMatrix & m) {
 		if((r + m.nR) > nR || (c + m.nC) > nC) throw ("Invalid matrix dimension");
 		for (int iR = 0; iR < m.nR; iR++)
 			for (int iC = 0; iC < m.nC; iC++)
@@ -298,7 +389,7 @@
 	void CMatrix ::addRow(const CMatrix & m) {
 		CMatrix n(nR + m.nR, max(nC, m.nC));
 		n.setSubMatrix(0, 0, *this);
-		n.setSubMatrix(nR, 0, m); 
+		n.setSubMatrix(nR, 0, m);
 		*this = n;
 	}
 

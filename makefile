@@ -1,26 +1,22 @@
 CC = g++
-CFLAGS = -c -Wall -I$(INCDIR)/
 BINDIR = ./bin
 BUILDIR = ./build
 SRCDIR = ./src
 INCDIR = ./include
-OBJECTS = $(BUILDIR)/main.o $(BUILDIR)/CMatrix.o $(BUILDIR)/CMatrix.h 
+OBJECTS = $(BUILDIR)/CMatrixh.o $(BUILDIR)/CMatrix.o $(BUILDIR)/main.o 
+CFLAGS = -Wall -I$(INCDIR)
 
 all: $(BINDIR)/CMatrix
 
 $(BINDIR)/CMatrix: $(OBJECTS) 
-	$(CC) $(OBJECTS) -o CMatrix
+	$(CC) $(OBJECTS) -o $(BINDIR)/CMatrix
 
-$(BUILDIR)/main.o: $(SRCDIR)/main.cpp
-	$(CC) $(CFLAGS) $(SRCDIR)/main.cpp
+$(BUILDIR)/main.o: $(SRCDIR)/main.cpp $(SRCDIR)/CMatrix.cpp $(INCDIR)/CMatrix.h
+	$(CC) $(CFLAGS) -c $(SRCDIR)/main.cpp
 
-$(BUILDIR)/CMatrix.o: $(SRCDIR)/CMatrix.cpp
-	$(CC) $(CFLAGS) $(SRCDIR)/CMatrix.cpp
-
+$(BUILDIR)/CMatrix.o: $(SRCDIR)/CMatrix.cpp $(INCDIR)/CMatrix.h
+	$(CC) $(CFLAGS) -c $(SRCDIR)/CMatrix.cpp
 
 $(BUILDIR)/CMatrixh.o: $(INCDIR)/CMatrix.h
-	$(CC) $(CFLAGS) $(INCDIR)/CMatrix.h
+	$(CC) $(CFLAGS) -c $(INCDIR)/CMatrix.h
 
-.PHONY: clean
-clean: 
-	rm -f $(BUILDIR)/*.o $(BINDIR)/CMatrix
