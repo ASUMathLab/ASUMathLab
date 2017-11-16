@@ -74,6 +74,10 @@ int main() {
 	string line = "";
 	int numlines = 0;
 
+	CMatrix a("[1.2 5.7 4.2 1.4 ; 6.3 2.5 8.1 3.1; 6.4 2.8 7.1 8.1;3.2 5.1 7.2 6.2]");
+	matrixNames.push_back("A");
+	matrix.push_back(a);
+
 	while (1) {
 		getline(cin, line);
 		if (line == "end" || line == "end;") {
@@ -83,12 +87,13 @@ int main() {
 		if (line.empty()) {
 			continue;
 		}
+		/*
 		if (line.find(";") == string::npos) {
 			cout << "missing ending semi colone" << endl;
 			continue;
 		}
-
-		line = line.substr(0, line.length() - 1);
+		*/
+		//line = line.substr(0, line.length() - 1);
 		size_t n = std::count(line.begin(), line.end(), '=');
 		int x = 0;
 		if (n == 0) {
@@ -137,17 +142,26 @@ int main() {
 		for (int i = 0; i < n; i++) {
 			int a = line.find("[");
 			if (line.find('[') != string::npos) {
+				/*
+				cout <<line;
+				CMatrix a(line);
+				matrix.push_back(a);
+				matrixNames.push_back("B");
+				*/
+				if (line[0] == ' ')
+				 	line =line.substr(1, line.length());
 				if (!existingFlag[numlines + i]) {
-					matrix.push_back(line);
+					CMatrix b(line);
+					matrix.push_back(b);
 				}
 				else {
+					CMatrix b(line);
 					matrix.push_back(NULL);
-					matrix[existingIndex[numlines + i]] = line;
+					matrix[existingIndex[numlines + i]] = b;
 				}
 
 			}
 			else if (line.find('[') == string::npos) {
-
 				//removing spaces
 				string::iterator end_pos = remove(line.begin(), line.end(), ' ');
 				line.erase(end_pos, line.end());

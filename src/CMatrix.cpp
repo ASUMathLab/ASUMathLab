@@ -178,7 +178,7 @@
 		values[0] = new double[1];
 		values[0][0] = d;
 	}
-
+/*
 	void CMatrix ::copy(string s) {
 		reset();
 		char * buffer = new char[s.length() + 1];
@@ -205,6 +205,39 @@
 		// this -> name = "none"; // Parsing First Charactars for Initialization for the Contructor
 		delete[] buffer;
 	}
+*/
+void CMatrix ::copy(string s) {
+	reset();
+	char * buffer = new char[s.length() + 1];
+	strcpy(buffer, s.c_str());
+	const char * lineSeparators = ";\r\n";
+	char * line = strtok(buffer, lineSeparators);
+	while (line) {
+		CMatrix row;
+		string s;
+		char* p = line;
+		if(line[0] == '[' || line[0] == ' '){
+			p++;
+			strcpy(line, p);
+			cout<<line<<endl;
+		}
+		for(int i = 0 ; i < strlen(line) + 1;i++) {
+			if( ( (line[i] == ' ') && (i != 0) )  || line[i] == ']') {
+				CMatrix item = atof(s.c_str());
+				row.addColumn(item);
+				s = "";
+			} else {
+				s += line[i];
+			}
+		}
+
+		if(row.nC > 0 && (row.nC == nC || nR == 0))
+			addRow(row);
+		line = strtok(NULL, lineSeparators);
+	}
+	// this -> name = "none"; // Parsing First Charactars for Initialization for the Contructor
+	delete[] buffer;
+}
 
 	void CMatrix ::reset() {
 		if(values) {
