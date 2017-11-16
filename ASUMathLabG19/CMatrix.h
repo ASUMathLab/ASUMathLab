@@ -48,11 +48,11 @@ public:
 	void operator *= (double d);
 	CMatrix operator * (CMatrix & m);
 	CMatrix operator * (double d);
-	/*void div(CMatrix & m);
-	void operator /= (cmatrix & m);
+	void div(CMatrix & m);
+	void operator /= (CMatrix & m);
 	void operator /= (double d);
-	cmatrix operator / (cmatrix & m);
-	cmatrix operator / (double d);*/
+	CMatrix operator / (CMatrix & m);
+	CMatrix operator / (double d);
 	CMatrix operator++(); //Pre Increment
 	CMatrix operator++(int); //Post Increment, int is not used
 	CMatrix operator--(); //Pre Increment

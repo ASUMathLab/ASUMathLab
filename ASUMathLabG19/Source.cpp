@@ -72,7 +72,7 @@ int main() {
 
 	string line = "";
 	int numlines = 0;
-
+	
 	while (1) {
 		getline(cin, line);
 		if (line == "end" || line == "end;") {
@@ -210,10 +210,54 @@ int main() {
 					}
 				}
 				else if (line.find('/') != string::npos) {
-					cout << "operation not supported yet" << endl;
+					string firstparmeter = line.substr(0, line.find('/'));
+					string secondparmeter = line.substr(line.find('/') + 1);
+					int firstindex, secondindex;
+					bool found1, found2;
+
+					if (getIndexAndCheckIfExist(matrixNames, matrix,
+						firstparmeter, firstindex, found1,
+						secondparmeter, secondindex, found2))
+						break;
+
+					if (!existingFlag[numlines + i]) {
+						matrix.push_back(matrix[firstindex] * matrix[secondindex].getInverse());
+					}
+					else {
+						matrix.push_back(NULL);
+						matrix[existingIndex[numlines + i]] = matrix[firstindex] * matrix[secondindex].getInverse();
+					}
 				}
 				else if (line.find("'") != string::npos) {
-					cout << "operation not supported yet" << endl;
+					string firstParmeter = line.substr(0, line.find("'"));
+					int firstIndex;
+					bool found1;
+
+					found1 = false;
+					for (int i = 0; i < matrixNames.size(); i++) {
+						if (firstParmeter == matrixNames[i]) {
+							firstIndex = i;
+							if (firstIndex >= matrix.size())
+								found1 = false;
+							else
+								found1 = true;
+				
+							break;
+						}
+					}
+
+					if (!found1) {
+						cout << firstParmeter << " is not Intiallized" << endl;
+						break;
+					}
+
+					if (!existingFlag[numlines + i]) {
+						matrix.push_back(matrix[firstIndex].getTranspose());
+					}
+					else {
+						matrix.push_back(NULL);
+						matrix[existingIndex[numlines + i]] = matrix[firstIndex].getTranspose();
+					}
 				}
 				else if (checkAlpha(line)) {
 
