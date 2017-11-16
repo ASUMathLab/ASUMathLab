@@ -265,13 +265,13 @@
 			for (int iC = 0; iC < nC; iC++)
 				values[iR][iC] += m.values[iR][iC];
 	}
-	void CMatrix ::operator += (CMatrix & m) {
+	void CMatrix ::operator += (const CMatrix & m) {
 		add(m);
 	}
 	void CMatrix ::operator += (double d) {
 		add(CMatrix(nR, nC, MI_VALUE, d));
 	}
-	CMatrix CMatrix ::operator + (CMatrix & m) {
+	CMatrix CMatrix ::operator + (const CMatrix & m) {
 		CMatrix r = *this;
 		r += m;
 		return r;
@@ -289,13 +289,13 @@
 			for (int iC = 0; iC < nC; iC++)
 				values[iR][iC] -= m.values[iR][iC];
 	}
-	void CMatrix ::operator -= (CMatrix & m) {
+	void CMatrix ::operator -= (const CMatrix & m) {
 		sub(m);
 	}
 	void CMatrix ::operator -= (double d) {
 		sub(CMatrix(nR, nC, MI_VALUE, d));
 	}
-	CMatrix CMatrix ::operator - (CMatrix & m) {
+	CMatrix CMatrix ::operator - (const CMatrix & m) {
 		CMatrix r = *this;
 		r -= m;
 		return r;
@@ -318,7 +318,7 @@
 			}
 		copy(r);
 	}
-	void CMatrix ::operator *= (CMatrix & m) {
+	void CMatrix ::operator *= (const CMatrix & m) {
 		mul(m);
 	}
 	void CMatrix ::operator *= (double d) {
@@ -326,7 +326,7 @@
 			for (int iC = 0; iC < nC; iC++)
 				values[iR][iC] *= d;
 	}
-	CMatrix CMatrix ::operator * (CMatrix & m) {
+	CMatrix CMatrix ::operator * (const CMatrix & m) {
 		CMatrix r = *this;
 		r *= m;
 		return r;

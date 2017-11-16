@@ -1,11 +1,12 @@
+#include "CMatrix.h"
+#include "CMatrix.cpp"
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "CMatrix.h"
 #include "stdarg.h"
 #include <vector>
 
-using namespace std;
+//using namespace std;
 
 bool getIndexAndCheckIfExist(vector<string> &matrixNames,
 	vector<CMatrix> &matrix,
