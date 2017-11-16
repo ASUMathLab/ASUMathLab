@@ -415,6 +415,34 @@
 		return value;
 	}
 
+	CMatrix CMatrix::getTranspose()
+	{
+		CMatrix a(nC, nR);
+		for (int iR = 0; iR < a.nR; iR++)
+			for (int iC = 0; iC < a.nC; iC++)
+				a.values[iR][iC] = values[iC][iR];
+
+		return a;
+	}
+
+	CMatrix CMatrix::getInverse()
+	{
+		if (nR != nC) throw ("Invalid matrix dimension");
+		CMatrix m(nR, nC);
+		for (int iR = 0; iR < m.nR; iR++)
+			for (int iC = 0; iC < m.nC; iC++)
+			{
+				if (iR % 2 == 0) {
+					m.values[iR][iC] = (iC % 2 == 0) ? getCofactor(iR, iC).getDeterminant() : -getCofactor(iR, iC).getDeterminant();
+				}
+				else
+					m.values[iR][iC] = (iC % 2 == 0) ? -getCofactor(iR, iC).getDeterminant() : getCofactor(iR, iC).getDeterminant();
+			}
+		m = m.getTranspose();
+		m = m * (1 / getDeterminant());
+		return m;
+}
+
 	istream & operator >> (istream &is, CMatrix & m) {
 		string s;
 		getline(is, s, ']');
