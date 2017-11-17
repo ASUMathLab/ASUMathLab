@@ -6,7 +6,7 @@
 #include <string.h>
 #include <stdio.h>
 
-// using namespace std;
+using namespace std;
 
 	CMatrix::CMatrix() {
 		nR = nC = 0;
@@ -235,7 +235,6 @@ void CMatrix ::copy(string s) {
 				addRow(row);
 			line = strtok(NULL, lineSeparators);
 		}
-	// this -> name = "none"; // Parsing First Charactars for Initialization for the Contructor
 	delete[] buffer;
 }
 
@@ -274,6 +273,9 @@ void CMatrix ::copy(string s) {
 			}
 			printf("\n");
 		}
+		cout << endl;
+		cout << "Number of Rows : " << nR << endl;
+		cout << "Number of Columns : " << nC << endl; 
 
 
 	}
@@ -340,15 +342,17 @@ void CMatrix ::copy(string s) {
 	}
 
 	void CMatrix ::mul(const CMatrix & m) {
-		if(nR!= m.nR || nC!= m.nC)
+		if(nC!= m.nR)
 			throw ("Invalid matrix dimension");
 		CMatrix r(nR, m.nC);
-		for (int iR = 0; iR < r.nR; iR++)
+		for (int iR = 0; iR < r.nR; iR++) {
 			for (int iC = 0; iC < r.nC; iC++) {
 				r.values[iR][iC] = 0;
-				for (int k = 0; k < m.nC; k++)
+				for (int k = 0; k < m.nR; k++) {
 					r.values[iR][iC] += values[iR][k] * m.values[k][iC];
+				}
 			}
+		}
 		copy(r);
 	}
 	void CMatrix ::operator *= (const CMatrix & m) {
